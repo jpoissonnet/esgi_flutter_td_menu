@@ -13,9 +13,7 @@ class RestaurantMenuApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Menu du Restaurant',
-      theme: ThemeData(
-        primarySwatch: Colors.orange,
-      ),
+      theme: ThemeData(primarySwatch: Colors.orange),
       home: const MenuScreen(),
     );
   }
@@ -32,22 +30,82 @@ class _MenuScreenState extends State<MenuScreen> {
   // Structure de données pour représenter les plats par catégorie
   final Map<String, List<Dish>> _menu = {
     'Entrées': [
-      Dish(name: 'Salade César', description: 'Laitue, poulet, croûtons, parmesan', price: 8.50),
-      Dish(name: 'Soupe à l\'oignon', description: 'Gratinée au fromage', price: 7.00),
-      Dish(name: 'Assiette de charcuterie', description: 'Saucisson, jambon cru, pâté', price: 12.00),
+      Dish(
+        name: 'Salade César',
+        description: 'Laitue, poulet, croûtons, parmesan',
+        price: 8.50,
+        imageUrl: 'assets/images/salade.jpg',
+      ),
+      Dish(
+        name: 'Soupe à l\'oignon',
+        description: 'Gratinée au fromage',
+        price: 7.00,
+        imageUrl: 'assets/images/soupe.jpg',
+      ),
+      Dish(
+        name: 'Assiette de charcuterie',
+        description: 'Saucisson, jambon cru, pâté',
+        price: 12.00,
+        imageUrl: 'assets/images/charcut.webp',
+      ),
     ],
     'Plats': [
-      Dish(name: 'Pâtes au Pesto', description: 'Mélange italien de basilic et de pignon de pain', price: 14.00),
-      Dish(name: 'Boeuf Bourguignon', description: 'Viande de boeuf mijotée au vin rouge', price: 15.50),
-      Dish(name: 'Filet de saumon grillé', description: 'Sauce à l\'aneth', price: 16.00),
-      Dish(name: 'Risotto aux champignons', description: 'Crémé et parfumé', price: 14.00),
-      Dish(name: 'Magret de canard', description: 'Sauce au miel et figues', price: 18.00),
+      Dish(
+        name: 'Pâtes au Pesto',
+        description: 'Mélange italien de basilic et de pignon de pain',
+        price: 14.00,
+        imageUrl: 'assets/images/pesto.jpg',
+      ),
+      Dish(
+        name: 'Boeuf Bourguignon',
+        description: 'Viande de boeuf mijotée au vin rouge',
+        price: 15.50,
+        imageUrl: 'assets/images/bourguignon.webp',
+      ),
+      Dish(
+        name: 'Filet de saumon grillé',
+        description: 'Sauce à l\'aneth',
+        price: 16.00,
+        imageUrl: 'assets/images/saumon.jpeg',
+      ),
+      Dish(
+        name: 'Risotto aux champignons',
+        description: 'Crémé et parfumé',
+        price: 14.00,
+        imageUrl: 'assets/images/risotto.jpg',
+      ),
+      Dish(
+        name: 'Magret de canard',
+        description: 'Sauce au miel et figues',
+        price: 18.00,
+        imageUrl: 'assets/images/canard.jpg',
+      ),
     ],
     'Desserts': [
-      Dish(name: 'Crème brûlée', description: 'Caramélisée à la cassonade', price: 6.00),
-      Dish(name: 'Tarte aux pommes', description: 'Faite maison', price: 5.50),
-      Dish(name: 'Mousse au chocolat', description: 'Noir intense', price: 6.50),
-      Dish(name: 'Île flottante', description: 'Crème anglaise et caramel', price: 7.00),
+      Dish(
+        name: 'Crème brûlée',
+        description: 'Caramélisée à la cassonade',
+        price: 6.00,
+        imageUrl: 'assets/images/creme.webp',
+      ),
+      Dish(
+        name: 'Tarte aux pommes',
+        description: 'Faite maison',
+        price: 5.50,
+        imageUrl: 'assets/images/tarte.webp',
+      ),
+      Dish(
+        name: 'Mousse au chocolat',
+        description: 'Noir intense',
+        price: 6.50,
+        imageUrl: 'assets/images/mousse.jpg',
+      ),
+      Dish(
+        name: 'Île flottante',
+        description: 'Crème anglaise et caramel',
+        price: 7.00,
+        imageUrl: 'assets/images/ile.jpg',
+      ),
     ],
   };
 
@@ -60,9 +118,7 @@ class _MenuScreenState extends State<MenuScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Menu du Restaurant'),
-      ),
+      appBar: AppBar(title: const Text('Menu du Restaurant')),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
@@ -80,7 +136,8 @@ class _MenuScreenState extends State<MenuScreen> {
                     selected: _selectedCategoryIndex == index,
                     onSelected: (bool selected) {
                       setState(() {
-                        _selectedCategoryIndex = selected ? index : _selectedCategoryIndex;
+                        _selectedCategoryIndex =
+                            selected ? index : _selectedCategoryIndex;
                       });
                     },
                   ),
@@ -110,8 +167,14 @@ class Dish {
   final String name;
   final String description;
   final double price;
+  final String imageUrl;
 
-  Dish({required this.name, required this.description, required this.price});
+  Dish({
+    required this.name,
+    required this.description,
+    required this.price,
+    this.imageUrl = '',
+  });
 }
 
 // Widget réutilisable pour afficher les informations d'un plat dans une carte
@@ -129,22 +192,44 @@ class DishCard extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
+            Container(
+              width: 100.0,
+              // Largeur fixe de l'image
+              height: 100.0,
+              // Hauteur fixe de l'image
+              margin: const EdgeInsets.only(bottom: 8.0),
+              // Espacement en dessous de l'image
+              child: Image.asset(
+                dish.imageUrl,
+                fit:
+                    BoxFit
+                        .cover, // Remplir le container, recadrer si nécessaire
+                errorBuilder:
+                    (context, object, stackTrace) => const Icon(
+                      Icons.error,
+                    ), // Afficher une icône en cas d'erreur de chargement
+              ),
+            ),
             // Nom du plat en gras
             Text(
               dish.name,
-              style: const TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold),
+              style: const TextStyle(
+                fontSize: 18.0,
+                fontWeight: FontWeight.bold,
+              ),
             ),
             const SizedBox(height: 8.0),
             // Description du plat
-            Text(
-              dish.description,
-              style: const TextStyle(color: Colors.grey),
-            ),
+            Text(dish.description, style: const TextStyle(color: Colors.grey)),
             const SizedBox(height: 12.0),
             // Prix du plat
             Text(
               '${dish.price.toStringAsFixed(2)} €',
-              style: const TextStyle(fontSize: 16.0, fontWeight: FontWeight.bold, color: Colors.orange),
+              style: const TextStyle(
+                fontSize: 16.0,
+                fontWeight: FontWeight.bold,
+                color: Colors.orange,
+              ),
             ),
           ],
         ),
